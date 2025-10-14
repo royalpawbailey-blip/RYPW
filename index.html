@@ -42,20 +42,15 @@
         radial-gradient(1100px 540px at 50% -140px, rgba(255,154,47,.55), rgba(255,154,47,0) 60%),
         linear-gradient(to bottom,var(--bg-top),var(--bg-bottom));
     }
-    .site-bg::after{
-      content:"";
-      position:absolute; inset:0;
-      opacity:.08;
-      background-image:url("data:image/svg+xml;utf8,\
-      <svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none'>\
-        <g fill='%23ffffff'>\
-          <path opacity='.6' d='M64 84c12 0 22 10 22 22s-10 22-22 22-22-10-22-22 10-22 22-22z'/>\
-          <circle opacity='.45' cx='36' cy='66' r='10'/><circle opacity='.45' cx='92' cy='66' r='10'/>\
-          <circle opacity='.45' cx='44' cy='120' r='9'/><circle opacity='.45' cx='84' cy='120' r='9'/>\
-          <path opacity='.5' d='M154 54l14-10 14 10 5 18-19 0-19 0 5-18zM149 72h38c0 12-9 22-19 22s-19-10-19-22z'/>\
-        </g>\
-      </svg>");
-      background-size:220px 220px; background-repeat:repeat;
+    .site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: url("assets/background.png") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
     }
 
     /* ---- БЕЙЛИ ---- */
