@@ -42,15 +42,20 @@
         radial-gradient(1100px 540px at 50% -140px, rgba(255,154,47,.55), rgba(255,154,47,0) 60%),
         linear-gradient(to bottom,var(--bg-top),var(--bg-bottom));
     }
-    .site-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  background: url("assets/background.png") no-repeat center center;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
+    .site-bg::after{
+      content:"";
+      position:absolute; inset:0;
+      opacity:.08;
+      background-image:url("data:image/svg+xml;utf8,\
+      <svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none'>\
+        <g fill='%23ffffff'>\
+          <path opacity='.6' d='M64 84c12 0 22 10 22 22s-10 22-22 22-22-10-22-22 10-22 22-22z'/>\
+          <circle opacity='.45' cx='36' cy='66' r='10'/><circle opacity='.45' cx='92' cy='66' r='10'/>\
+          <circle opacity='.45' cx='44' cy='120' r='9'/><circle opacity='.45' cx='84' cy='120' r='9'/>\
+          <path opacity='.5' d='M154 54l14-10 14 10 5 18-19 0-19 0 5-18zM149 72h38c0 12-9 22-19 22s-19-10-19-22z'/>\
+        </g>\
+      </svg>");
+      background-size:220px 220px; background-repeat:repeat;
     }
 
     /* ---- БЕЙЛИ ---- */
@@ -236,7 +241,7 @@
   <!-- HERO -->
   <section class="hero" id="buy">
     <h1>RoyalPAW $RYPW</h1>
-    <p>The Royal Bark of Web3. Blockchain S0LANA</p>
+    <p>The Royal Bark of Web3 on Solana</p>
     <a class="buy-btn" href="https://pump.fun/board" target="_blank">BUY $RYPW</a>
     <p><strong>Contract address:</strong> So11111111111111111111111111111111111111112</p>
   </section>
@@ -244,11 +249,7 @@
   <!-- ABOUT -->
   <section id="about">
     <h2>About RoyalPAW</h2>
-    <p>RoyalPAW ($RYPW) is not just another meme token — it’s the crown jewel of Solana, inspired by Bailey, the one true royal Cavalier King — the only dog with “King” in his name. 🐶👑
-
-Forged from loyalty, purpose, and paws, RoyalPAW unites meme culture with real-world kindness — supporting dog shelters, honoring all four-legged royals, and crowning its holders as part of the digital kingdom of paw power.
-
-With NFTs, community strength, and unstoppable royal vibes, Bailey’s dream becomes the blockchain’s legacy.</p>
+    <p>RoyalPAW is a meme token on Solana inspired by Bailey – the royal Cavalier King with a crypto dream. Built with purpose, paws, and community spirit, $RYPW supports real-world dog shelters while creating digital royalty through NFTs and memes. Join the pack and bark into the future!</p>
   </section>
 
   <!-- HOW TO BUY -->
@@ -373,4 +374,3 @@ With NFTs, community strength, and unstoppable royal vibes, Bailey’s dream bec
 
 </body>
 </html>
-
