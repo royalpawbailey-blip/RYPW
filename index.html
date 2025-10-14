@@ -6,188 +6,133 @@
   <title>RoyalPAW - $RYPW</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
   <style>
-    body {
-      background: url("assets/bg.png") no-repeat center center;
-      background-size: contain; /* Показва цялото изображение */
-      background-position: center top; /* Фокусира фона горе-център */
-      background-attachment: scroll; /* По-добра съвместимост */
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh; /* Осигурява пълна височина */
+    :root{
+      --bg-top:#2a1620;
+      --bg-bottom:#140c12;
+      --glow:#ff9a2f;
     }
 
-    nav ul li a {
-      color: white !important;
-      font-weight: bold;
+    /* БАЗА */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Segoe UI',system-ui,Roboto,Arial,sans-serif;
+      color:#fff;
+      background:#140c12; /* вече няма бели полета под героя */
+      overflow-x: hidden;
     }
 
-    h1, h2, h3, p, li {
-      color: white;
+    /* БЕЗКРАЕН ФОН (градиент + лек pattern) */
+    .site-bg{
+      position:fixed; inset:0; z-index:-2;
+      background:
+        radial-gradient(1100px 540px at 50% -140px, rgba(255,154,47,.55), rgba(255,154,47,0) 60%),
+        linear-gradient(to bottom,var(--bg-top),var(--bg-bottom));
+    }
+    .site-bg::after{
+      content:""; position:absolute; inset:0; z-index:-1; opacity:.08; pointer-events:none;
+      background-image: url("data:image/svg+xml;utf8,\
+      <svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none'>\
+        <g fill='%23ffffff'>\
+          <path opacity='.6' d='M64 84c12 0 22 10 22 22s-10 22-22 22-22-10-22-22 10-22 22-22z'/>\
+          <circle opacity='.45' cx='36' cy='66' r='10'/><circle opacity='.45' cx='92' cy='66' r='10'/>\
+          <circle opacity='.45' cx='44' cy='120' r='9'/><circle opacity='.45' cx='84' cy='120' r='9'/>\
+          <path opacity='.5' d='M154 54l14-10 14 10 5 18-19 0-19 0 5-18zM149 72h38c0 12-9 22-19 22s-19-10-19-22z'/>\
+        </g>\
+      </svg>");
+      background-size:220px 220px;
+      background-repeat:repeat;
     }
 
-    main, section {
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 900px;
-      margin: 2rem auto;
-      animation: fadeInUp 1.5s ease;
-      background: rgba(0, 0, 0, 0.4);
+    /* КУЧЕТО – отделно изображение, не е част от фона */
+    .hero-dog{
+      position:fixed; z-index:-1; /* под съдържанието, над фона */
+      top: clamp(16px, 5vh, 80px);
+      right: min(5vw, 48px);
+      width: clamp(260px, 32vw, 520px);
+      height:auto;
+      filter: drop-shadow(0 28px 60px rgba(0,0,0,.45));
+      user-select:none; pointer-events:none;
     }
 
-    /* HERO SECTION */
-    .hero {
-      text-align: center;
-      padding-top: 7rem;
-      background: none;
+    nav ul li a { color:#fff !important; font-weight:700; }
+
+    h1, h2, h3, p, li { color:#fff; }
+
+    main, section{
+      padding:2rem;
+      border-radius:12px;
+      max-width:900px;
+      margin:2rem auto;
+      animation:fadeInUp 1.2s ease;
+      background:rgba(0,0,0,0.4);
     }
-    .hero p {
-      font-size: 1.4rem;
-      margin-top: 1rem;
-      font-weight: bold;
+
+    /* HERO */
+    .hero{
+      text-align:center;
+      padding-top: clamp(7rem, 14vh, 11rem); /* място за кучето отгоре */
+      background:none;
     }
-    .buy-btn {
-      display: inline-block;
-      background: linear-gradient(to right, #ffa500, #ff3c3c);
-      padding: 1rem 2rem;
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      border-radius: 10px;
-      color: white;
-      text-decoration: none;
+    .hero p{ font-size:1.4rem; margin-top:1rem; font-weight:700; }
+    .buy-btn{
+      display:inline-block; background:linear-gradient(180deg,#ffb24a,#ff7a50);
+      padding:1rem 2rem; margin-top:2rem; font-size:1.2rem; font-weight:800;
+      border-radius:10px; color:#1a0d0d; text-decoration:none;
+      box-shadow:0 10px 30px rgba(255,122,80,.35);
+      transition:transform .15s ease, box-shadow .15s ease;
     }
+    .buy-btn:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(255,122,80,.45); }
 
     /* ROADMAP */
-    .roadmap-image {
-      width: 90%;
-      max-width: 1200px;
-      display: block;
-      margin: 1rem auto;
-      border-radius: 12px;
+    .roadmap-image{
+      width:90%; max-width:1200px; display:block; margin:1rem auto; border-radius:12px;
     }
 
     /* NFT GRID */
-    .nft-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
-    .nft-grid img {
-      width: 100px;
-      border-radius: 10px;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-    .nft-grid img:hover {
-      transform: scale(1.2);
-    }
+    .nft-grid{ display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
+    .nft-grid img{ width:100px; border-radius:10px; transition:transform .3s ease; cursor:pointer; }
+    .nft-grid img:hover{ transform:scale(1.2); }
 
     /* MEDIA GRID */
-    .media-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-    .media-grid img {
-      width: 100px;
-      height: 100px;
-      border-radius: 10px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-    .media-grid img:hover {
-      transform: scale(1.2);
-    }
+    .media-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; }
+    .media-grid img{ width:100px; height:100px; border-radius:10px; object-fit:cover; transition:transform .3s ease; cursor:pointer; }
+    .media-grid img:hover{ transform:scale(1.2); }
 
-    /* SOCIAL ICONS */
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .social-icons img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-    }
+    /* SOCIAL */
+    .social-icons{ display:flex; justify-content:center; flex-wrap:wrap; gap:1rem; }
+    .social-icons img{ width:40px; height:40px; object-fit:contain; }
 
-    /* AUDIO PLAYER */
-    audio {
-      width: 100%;
-      margin-top: 1rem;
-    }
+    audio{ width:100%; margin-top:1rem; }
+    iframe{ width:100%; height:500px; border:none; }
 
-    /* DEX FRAME */
-    iframe {
-      width: 100%;
-      height: 500px;
-      border: none;
-    }
-
-    /* RESPONSIVE DESIGN */
-    @media (max-width: 768px) {
-      body {
-        background-size: contain; /* Осигурява видимост на целия фон */
-        background-position: center top;
-        background-attachment: scroll; /* По-добра съвместимост за мобилни */
-        min-height: 100vh;
+    /* MOBILE */
+    @media (max-width: 900px){
+      .hero-dog{
+        right:50%; transform:translateX(50%);
+        top: clamp(8px, 4vh, 32px);
+        width: clamp(220px, 56vw, 380px);
+        opacity:.98;
       }
-
-      .hero {
-        padding-top: 4rem;
-      }
-
-      .roadmap-image {
-        width: 100%;
-        border-radius: 8px;
-      }
-
-      main, section {
-        padding: 1rem;
-        margin: 1rem auto;
-      }
-
-      .nft-grid img,
-      .media-grid img {
-        width: 80px;
-        height: 80px;
-      }
-
-      .social-icons img {
-        width: 36px;
-        height: 36px;
-      }
+      .hero{ padding-top: clamp(12rem, 28vh, 18rem); } /* да не застъпва текста */
+      .roadmap-image{ width:100%; border-radius:8px; }
+      main, section{ padding:1rem; margin:1rem auto; }
+      .nft-grid img, .media-grid img{ width:80px; height:80px; }
+      .social-icons img{ width:36px; height:36px; }
+      .hero p{ font-size:1.2rem; }
+      .buy-btn{ padding:.8rem 1.5rem; font-size:1rem; }
     }
 
-    @media (max-width: 480px) {
-      body {
-        background-size: contain; /* Запазва целия фон видим */
-        background-position: center top;
-      }
-
-      .hero p {
-        font-size: 1.2rem;
-      }
-
-      .buy-btn {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-      }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeInUp{ from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
   </style>
 </head>
 <body>
+
+  <!-- БЕЗКРАЕН ФОН + КУЧЕ -->
+  <div class="site-bg" aria-hidden="true"></div>
+  <!-- замени пътя, ако ползваш друго име -->
+  <img class="hero-dog" src="assets/bailey-king.png" alt="RoyalPAW Bailey with crown">
 
   <nav class="container-fluid">
     <ul><li><strong>RoyalPAW</strong></li></ul>
@@ -253,8 +198,9 @@
   <section id="nfts">
     <h2>Bailey’s NFT Collection</h2>
     <p>150 unique NFTs with bonuses:<br>
-    • 50 Premium = 100K $RYPW<br>
-    • 100 Standard = 50K $RYPW</p>
+      • 50 Premium = 100K $RYPW<br>
+      • 100 Standard = 50K $RYPW
+    </p>
     <div class="nft-grid">
       <img src="assets/nft1.png" alt="NFT1" />
       <img src="assets/nft2.png" alt="NFT2" />
