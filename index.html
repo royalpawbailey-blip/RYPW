@@ -90,7 +90,7 @@
 
     /* ---- СЕКЦИИ ---- */
     main, section{
-      padding:2rem;
+      :2rem;
       border-radius:16px;
       max-width:900px;
       margin:2rem auto;
@@ -101,20 +101,29 @@
 
     /* ---- HERO ---- */
     .hero{
-      text-align:center;
-      padding-top: clamp(6rem, 12vh, 9rem);
-      padding-bottom: clamp(2rem, 5vh, 4rem);
-      background: transparent;
-      border-radius: 0;
-      width: auto;
-      margin: 4rem auto 1rem;
-    }
-    .hero p{
-      font-size:1.35rem;
-      margin:0.5rem 0 0;
-      font-weight:700;
-      color:#fff;
-      text-shadow:0 2px 10px rgba(0,0,0,.7);
+  /* по-малко празно място горе и долу + по-малък марджин към следващата секция */
+  padding-top: clamp(4rem, 9vh, 6.5rem);
+  padding-bottom: clamp(1rem, 3vh, 2rem);
+  margin: 2.5rem auto 0.5rem;
+}
+.hero h1{
+  font-size: clamp(3.2rem, 7.4vw, 5rem); /* по-голямо заглавие */
+  line-height: 1.1;
+  letter-spacing: 2px;
+}
+#about{
+  margin-top: .75rem; /* приближава About към hero */
+}
+
+/* мобилен—да не стане прекалено голямо/високо */
+@media (max-width: 900px){
+  .hero{
+    padding-top: clamp(8rem, 22vh, 14rem);
+    padding-bottom: clamp(.75rem, 2vh, 1.25rem);
+    margin: 2rem auto .5rem;
+  }
+  .hero h1{
+    font-size: clamp(2.2rem, 9vw, 3rem);
     }
 
     /* ---- Анимирани златни заглавия ---- */
