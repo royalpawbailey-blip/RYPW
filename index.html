@@ -9,41 +9,58 @@
     :root{
       --bg-top:#2a1620;
       --bg-bottom:#140c12;
-      --glow:#ff9a2f;
     }
 
-    /* БАЗА */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
       font-family:'Segoe UI',system-ui,Roboto,Arial,sans-serif;
       color:#fff;
-      background-color:#140c12;
-      background-image:url("assets/bg.png"); /* фонът с Бейли вътре */
-      background-repeat:no-repeat;
-      background-size:cover;
-      background-attachment:fixed;
-      background-position:center -160px; /* вдигнат фон нагоре */
+      background:#140c12; /* не слагаме картинка тук */
       overflow-x:hidden;
     }
 
-    /* по-големи екрани – малко по-високо */
-    @media (min-width:1400px){
-      body{ background-position:center -220px; }
+    /* БЕЗКРАЕН ФОН (градиент + лек pattern) */
+    .site-bg{
+      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      background:
+        radial-gradient(1100px 540px at 50% -140px, rgba(255,154,47,.55), rgba(255,154,47,0) 60%),
+        linear-gradient(to bottom,var(--bg-top),var(--bg-bottom));
+    }
+    .site-bg::after{
+      content:""; position:absolute; inset:0; opacity:.08;
+      background-image:url("data:image/svg+xml;utf8,\
+      <svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none'>\
+        <g fill='%23ffffff'>\
+          <path opacity='.6' d='M64 84c12 0 22 10 22 22s-10 22-22 22-22-10-22-22 10-22 22-22z'/>\
+          <circle opacity='.45' cx='36' cy='66' r='10'/><circle opacity='.45' cx='92' cy='66' r='10'/>\
+          <circle opacity='.45' cx='44' cy='120' r='9'/><circle opacity='.45' cx='84' cy='120' r='9'/>\
+          <path opacity='.5' d='M154 54l14-10 14 10 5 18-19 0-19 0 5-18zM149 72h38c0 12-9 22-19 22s-19-10-19-22z'/>\
+        </g>\
+      </svg>");
+      background-size:220px 220px; background-repeat:repeat;
     }
 
-    /* tablet/mobile – нормална позиция */
-    @media (max-width:900px){
-      body{
-        background-attachment:scroll;
-        background-position:center top;
-        background-size:contain;
+    /* КУЧЕТО – отделен елемент (няма да се реже/мащабира странно) */
+    .hero-dog{
+      position:fixed; z-index:-1; /* под съдържанието, над фона */
+      top: clamp(16px, 5vh, 80px);
+      right: min(5vw, 48px);
+      width: clamp(260px, 32vw, 520px);
+      height:auto;
+      filter: drop-shadow(0 28px 60px rgba(0,0,0,.45));
+      user-select:none; pointer-events:none;
+    }
+    @media (max-width: 900px){
+      .hero-dog{
+        right:50%; transform:translateX(50%);
+        top: clamp(8px, 4vh, 32px);
+        width: clamp(220px, 56vw, 380px);
       }
     }
 
     nav ul li a { color:#fff !important; font-weight:700; }
-
     h1, h2, h3, p, li { color:#fff; }
 
     main, section{
@@ -51,14 +68,14 @@
       border-radius:12px;
       max-width:900px;
       margin:2rem auto;
-      animation:fadeInUp 1.2s ease;
       background:rgba(0,0,0,0.4);
+      animation:fadeInUp 1.2s ease;
     }
 
-    /* HERO */
+    /* HERO – да има място за кучето отгоре, без тъмна „дупка“ */
     .hero{
       text-align:center;
-      padding-top:3.5rem; /* беше 7rem, намалено за да не стои празно */
+      padding-top: clamp(6rem, 12vh, 9rem);
       background:none;
     }
     .hero p{ font-size:1.4rem; margin-top:1rem; font-weight:700; }
@@ -71,31 +88,20 @@
     }
     .buy-btn:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(255,122,80,.45); }
 
-    /* ROADMAP */
-    .roadmap-image{
-      width:90%; max-width:1200px; display:block; margin:1rem auto; border-radius:12px;
-    }
-
-    /* NFT GRID */
+    .roadmap-image{ width:90%; max-width:1200px; display:block; margin:1rem auto; border-radius:12px; }
     .nft-grid{ display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
     .nft-grid img{ width:100px; border-radius:10px; transition:transform .3s ease; cursor:pointer; }
     .nft-grid img:hover{ transform:scale(1.2); }
-
-    /* MEDIA GRID */
     .media-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; }
     .media-grid img{ width:100px; height:100px; border-radius:10px; object-fit:cover; transition:transform .3s ease; cursor:pointer; }
     .media-grid img:hover{ transform:scale(1.2); }
-
-    /* SOCIAL */
     .social-icons{ display:flex; justify-content:center; flex-wrap:wrap; gap:1rem; }
     .social-icons img{ width:40px; height:40px; object-fit:contain; }
-
     audio{ width:100%; margin-top:1rem; }
     iframe{ width:100%; height:500px; border:none; }
 
-    /* MOBILE */
     @media (max-width: 900px){
-      .hero{ padding-top:4rem; }
+      .hero{ padding-top: clamp(12rem, 28vh, 18rem); } /* да не застъпва текста на mobile */
       .roadmap-image{ width:100%; border-radius:8px; }
       main, section{ padding:1rem; margin:1rem auto; }
       .nft-grid img, .media-grid img{ width:80px; height:80px; }
@@ -108,6 +114,10 @@
   </style>
 </head>
 <body>
+
+  <!-- Безкраен фон + куче отделно -->
+  <div class="site-bg" aria-hidden="true"></div>
+  <img class="hero-dog" src="assets/bailey-king.png" alt="RoyalPAW Bailey with crown">
 
   <nav class="container-fluid">
     <ul><li><strong>RoyalPAW</strong></li></ul>
