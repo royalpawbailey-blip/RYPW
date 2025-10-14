@@ -9,6 +9,7 @@
     :root{
       --bg-top:#2a1620;
       --bg-bottom:#140c12;
+      --glow:#ff9a2f;
     }
 
     *{box-sizing:border-box}
@@ -17,19 +18,24 @@
       margin:0;
       font-family:'Segoe UI',system-ui,Roboto,Arial,sans-serif;
       color:#fff;
-      background:#140c12; /* не слагаме картинка тук */
+      background:#140c12;
       overflow-x:hidden;
     }
 
-    /* БЕЗКРАЕН ФОН (градиент + лек pattern) */
+    /* ---- БЕЗКРАЕН ФОН ---- */
     .site-bg{
-      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
       background:
         radial-gradient(1100px 540px at 50% -140px, rgba(255,154,47,.55), rgba(255,154,47,0) 60%),
         linear-gradient(to bottom,var(--bg-top),var(--bg-bottom));
     }
     .site-bg::after{
-      content:""; position:absolute; inset:0; opacity:.08;
+      content:"";
+      position:absolute; inset:0;
+      opacity:.08;
       background-image:url("data:image/svg+xml;utf8,\
       <svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none'>\
         <g fill='%23ffffff'>\
@@ -42,9 +48,9 @@
       background-size:220px 220px; background-repeat:repeat;
     }
 
-    /* КУЧЕТО – отделен елемент (няма да се реже/мащабира странно) */
+    /* ---- КУЧЕ ---- */
     .hero-dog{
-      position:fixed; z-index:-1; /* под съдържанието, над фона */
+      position:fixed; z-index:-1;
       top: clamp(16px, 5vh, 80px);
       right: min(5vw, 48px);
       width: clamp(260px, 32vw, 520px);
@@ -72,22 +78,68 @@
       animation:fadeInUp 1.2s ease;
     }
 
-    /* HERO – да има място за кучето отгоре, без тъмна „дупка“ */
+    /* ---- HERO ---- */
     .hero{
       text-align:center;
-      padding-top: clamp(6rem, 12vh, 9rem);
-      background:none;
+      padding-top: clamp(7rem, 14vh, 11rem);
+      padding-bottom: clamp(3rem, 6vh, 5rem);
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px) saturate(140%);
+      border-radius: 18px;
+      width: fit-content;
+      margin: 6rem auto 2rem auto;
+      box-shadow: 0 0 25px rgba(0,0,0,0.35);
     }
-    .hero p{ font-size:1.4rem; margin-top:1rem; font-weight:700; }
+    .hero p{
+      font-size:1.4rem;
+      margin-top:1rem;
+      font-weight:700;
+      color:#fff;
+      text-shadow:0 2px 10px rgba(0,0,0,0.6);
+    }
+
+    /* ---- СВЕТЕЩ БУТОН ---- */
     .buy-btn{
-      display:inline-block; background:linear-gradient(180deg,#ffb24a,#ff7a50);
-      padding:1rem 2rem; margin-top:2rem; font-size:1.2rem; font-weight:800;
-      border-radius:10px; color:#1a0d0d; text-decoration:none;
-      box-shadow:0 10px 30px rgba(255,122,80,.35);
+      display:inline-block;
+      background:linear-gradient(180deg,#ffb24a,#ff7a50);
+      padding:1rem 2rem;
+      margin-top:2rem;
+      font-size:1.2rem;
+      font-weight:800;
+      border-radius:12px;
+      color:#1a0d0d;
+      text-decoration:none;
+      box-shadow:0 0 25px rgba(255,150,70,0.4);
+      position:relative;
+      overflow:hidden;
+      animation: pulseGlow 2s infinite;
       transition:transform .15s ease, box-shadow .15s ease;
     }
-    .buy-btn:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(255,122,80,.45); }
 
+    .buy-btn::after{
+      content:"";
+      position:absolute;
+      top:0; left:-80%;
+      width:50%;
+      height:100%;
+      background:linear-gradient(120deg,rgba(255,255,255,0.6),rgba(255,255,255,0));
+      transform:skewX(-20deg);
+      animation:shine 4s infinite;
+    }
+
+    @keyframes shine{
+      0%{ left:-80%; }
+      50%{ left:130%; }
+      100%{ left:130%; }
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow:0 0 25px rgba(255,150,70,0.45); transform:scale(1);}
+      50%{ box-shadow:0 0 50px rgba(255,190,120,0.9); transform:scale(1.05);}
+      100%{ box-shadow:0 0 25px rgba(255,150,70,0.45); transform:scale(1);}
+    }
+
+    /* ---- ПРОДЪЛЖЕНИЕ ---- */
     .roadmap-image{ width:90%; max-width:1200px; display:block; margin:1rem auto; border-radius:12px; }
     .nft-grid{ display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
     .nft-grid img{ width:100px; border-radius:10px; transition:transform .3s ease; cursor:pointer; }
@@ -101,13 +153,13 @@
     iframe{ width:100%; height:500px; border:none; }
 
     @media (max-width: 900px){
-      .hero{ padding-top: clamp(12rem, 28vh, 18rem); } /* да не застъпва текста на mobile */
+      .hero{ padding-top: clamp(12rem, 28vh, 18rem); }
       .roadmap-image{ width:100%; border-radius:8px; }
       main, section{ padding:1rem; margin:1rem auto; }
       .nft-grid img, .media-grid img{ width:80px; height:80px; }
       .social-icons img{ width:36px; height:36px; }
       .hero p{ font-size:1.2rem; }
-      .buy-btn{ padding:.8rem 1.5rem; font-size:1rem; }
+      .buy-btn{ padding:.9rem 1.6rem; font-size:1.05rem; }
     }
 
     @keyframes fadeInUp{ from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
@@ -115,10 +167,11 @@
 </head>
 <body>
 
-  <!-- Безкраен фон + куче отделно -->
+  <!-- ФОН + КУЧЕ -->
   <div class="site-bg" aria-hidden="true"></div>
   <img class="hero-dog" src="assets/bailey-king.png" alt="RoyalPAW Bailey with crown">
 
+  <!-- НАВИГАЦИЯ -->
   <nav class="container-fluid">
     <ul><li><strong>RoyalPAW</strong></li></ul>
     <ul>
@@ -132,17 +185,20 @@
     </ul>
   </nav>
 
+  <!-- HERO -->
   <section class="hero" id="buy">
     <p>$RYPW Utility Token powering paws, NFTs and community impact.</p>
     <a class="buy-btn" href="https://pump.fun/board" target="_blank">BUY $RYPW</a>
     <p><strong>Contract address:</strong> So11111111111111111111111111111111111111112</p>
   </section>
 
+  <!-- ABOUT -->
   <section id="about">
     <h2>About RoyalPAW</h2>
     <p>RoyalPAW is a meme token on Solana inspired by Bailey – the royal Cavalier King with a crypto dream. Built with purpose, paws, and community spirit, $RYPW supports real-world dog shelters while creating digital royalty through NFTs and memes. Join the pack and bark into the future!</p>
   </section>
 
+  <!-- HOW TO BUY -->
   <section id="how">
     <h2>How to Buy</h2>
     <ol>
@@ -154,6 +210,7 @@
     </ol>
   </section>
 
+  <!-- TOKENOMICS -->
   <section id="tokenomics">
     <h2>Tokenomics</h2>
     <p><img src="assets/token-icon.png" alt="Token Icon" style="width:30px; vertical-align:middle;"> Total Supply: 1,000,000,000 $RYPW</p>
@@ -167,11 +224,13 @@
     <iframe src="https://dexscreener.com/"></iframe>
   </section>
 
+  <!-- ROADMAP -->
   <section id="roadmap">
     <h2>Roadmap</h2>
     <img src="assets/roadmap.png" alt="Roadmap" class="roadmap-image" />
   </section>
 
+  <!-- STORY -->
   <section id="story">
     <h2>The Story of Bailey</h2>
     <audio controls autoplay>
@@ -180,6 +239,7 @@
     </audio>
   </section>
 
+  <!-- NFTS -->
   <section id="nfts">
     <h2>Bailey’s NFT Collection</h2>
     <p>150 unique NFTs with bonuses:<br>
@@ -197,6 +257,7 @@
     </div>
   </section>
 
+  <!-- SOCIALS -->
   <section id="socials">
     <h2>Socials</h2>
     <div class="social-icons">
@@ -211,6 +272,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer style="text-align: center; padding: 2rem;">
     <small>RoyalPAW © 2025 • <a href="#buy" style="color: white;">Back to Top</a></small>
   </footer>
