@@ -67,11 +67,9 @@
       }
     }
 
-    /* ---- НАВИГАЦИЯ/ТЕКСТ ---- */
     nav ul li a { color:#fff !important; font-weight:700; }
     h1, h2, h3, p, li { color:#fff; }
 
-    /* ---- СЕКЦИИ ---- */
     main, section{
       padding:2rem;
       border-radius:12px;
@@ -86,7 +84,7 @@
       text-align:center;
       padding-top: clamp(6rem, 12vh, 9rem);
       padding-bottom: clamp(2rem, 5vh, 4rem);
-      background: transparent; /* напълно прозрачно */
+      background: transparent;
       backdrop-filter: none;
       border-radius: 0;
       width: auto;
@@ -101,42 +99,53 @@
       text-shadow:0 2px 10px rgba(0,0,0,.7);
     }
 
-    /* ---- СВЕТЕЩ БУТОН ---- */
+    /* ---- ЗЛАТНИ БУТОНИ ---- */
     .buy-btn{
       display:inline-block;
-      background:linear-gradient(180deg,#ffb24a,#ff7a50);
+      background:linear-gradient(135deg,#f6e27a 0%,#ffd451 30%,#ffb400 70%,#e6a800 100%);
+      color:#2a1500;
+      font-weight:800;
       padding:1rem 2rem;
       margin-top:2rem;
       font-size:1.2rem;
-      font-weight:800;
       border-radius:12px;
-      color:#1a0d0d;
+      border:1px solid rgba(255,220,100,0.5);
       text-decoration:none;
-      box-shadow:0 0 25px rgba(255,150,70,0.4);
+      box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.4),
+        0 0 25px rgba(255,200,90,0.45),
+        0 0 60px rgba(255,180,70,0.25);
       position:relative;
       overflow:hidden;
-      animation: pulseGlow 2s infinite;
-      transition:transform .15s ease, box-shadow .15s ease;
+      animation: pulseGold 2.5s infinite ease-in-out;
+      transition:transform .2s ease, box-shadow .3s ease, filter .3s ease;
+    }
+    .buy-btn:hover{
+      transform:translateY(-2px) scale(1.04);
+      box-shadow:
+        inset 0 2px 6px rgba(255,255,255,0.5),
+        0 0 35px rgba(255,210,80,0.75),
+        0 0 80px rgba(255,160,40,0.55);
+      filter:brightness(1.1);
     }
     .buy-btn::after{
       content:"";
       position:absolute;
-      top:0; left:-80%;
+      top:0; left:-75%;
       width:50%;
       height:100%;
-      background:linear-gradient(120deg,rgba(255,255,255,0.6),rgba(255,255,255,0));
+      background:linear-gradient(120deg,rgba(255,255,255,0.7),rgba(255,255,255,0));
       transform:skewX(-20deg);
-      animation:shine 4s infinite;
+      animation:shineGold 4s infinite;
     }
-    @keyframes shine{
-      0%{ left:-80%; }
-      50%{ left:130%; }
-      100%{ left:130%; }
+    @keyframes shineGold{
+      0%{ left:-75%; }
+      50%{ left:125%; }
+      100%{ left:125%; }
     }
-    @keyframes pulseGlow {
-      0% { box-shadow:0 0 25px rgba(255,150,70,0.45); transform:scale(1);}
-      50%{ box-shadow:0 0 50px rgba(255,190,120,0.9); transform:scale(1.05);}
-      100%{ box-shadow:0 0 25px rgba(255,150,70,0.45); transform:scale(1);}
+    @keyframes pulseGold{
+      0%,100%{ box-shadow:0 0 25px rgba(255,200,90,0.35); }
+      50%{ box-shadow:0 0 50px rgba(255,230,120,0.8); }
     }
 
     /* ---- ДРУГИ СЕКЦИИ ---- */
@@ -152,7 +161,6 @@
     audio{ width:100%; margin-top:1rem; }
     iframe{ width:100%; height:500px; border:none; }
 
-    /* ---- MOBILE ---- */
     @media (max-width: 900px){
       .hero{ padding-top: clamp(12rem, 28vh, 18rem); }
       .roadmap-image{ width:100%; border-radius:8px; }
@@ -168,11 +176,9 @@
 </head>
 <body>
 
-  <!-- ФОН + КУЧЕ -->
   <div class="site-bg"></div>
   <img class="hero-dog" src="assets/bailey-king.png" alt="RoyalPAW Bailey with crown">
 
-  <!-- НАВИГАЦИЯ -->
   <nav class="container-fluid">
     <ul><li><strong>RoyalPAW</strong></li></ul>
     <ul>
@@ -186,20 +192,17 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section class="hero" id="buy">
     <p>$RYPW Utility Token powering paws, NFTs and community impact.</p>
     <a class="buy-btn" href="https://pump.fun/board" target="_blank">BUY $RYPW</a>
     <p><strong>Contract address:</strong> So11111111111111111111111111111111111111112</p>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <h2>About RoyalPAW</h2>
     <p>RoyalPAW is a meme token on Solana inspired by Bailey – the royal Cavalier King with a crypto dream. Built with purpose, paws, and community spirit, $RYPW supports real-world dog shelters while creating digital royalty through NFTs and memes. Join the pack and bark into the future!</p>
   </section>
 
-  <!-- 💸 HOW TO BUY (подробен) -->
   <section id="how">
     <h2>How to Buy $RYPW</h2>
     <p>Buying $RYPW on <strong>Solana</strong> is simple and takes just a few minutes! Follow these steps carefully 👇</p>
@@ -246,7 +249,6 @@
     </div>
   </section>
 
-  <!-- TOKENOMICS -->
   <section id="tokenomics">
     <h2>Tokenomics</h2>
     <p><img src="assets/token-icon.png" alt="Token Icon" style="width:30px; vertical-align:middle;"> Total Supply: 1,000,000,000 $RYPW</p>
@@ -260,13 +262,11 @@
     <iframe src="https://dexscreener.com/"></iframe>
   </section>
 
-  <!-- ROADMAP -->
   <section id="roadmap">
     <h2>Roadmap</h2>
     <img src="assets/roadmap.png" alt="Roadmap" class="roadmap-image" />
   </section>
 
-  <!-- STORY -->
   <section id="story">
     <h2>The Story of Bailey</h2>
     <audio controls autoplay>
@@ -275,7 +275,6 @@
     </audio>
   </section>
 
-  <!-- NFTS -->
   <section id="nfts">
     <h2>Bailey’s NFT Collection</h2>
     <p>150 unique NFTs with bonuses:<br>
@@ -293,7 +292,6 @@
     </div>
   </section>
 
-  <!-- SOCIALS -->
   <section id="socials">
     <h2>Socials</h2>
     <div class="social-icons">
@@ -308,10 +306,5 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer style="text-align: center; padding: 2rem;">
-    <small>RoyalPAW © 2025 • <a href="#buy" style="color: white;">Back to Top</a></small>
-  </footer>
-
-</body>
-</html>
+    <small>RoyalPAW © 2025 • <a href="#buy" style="color: white;">Back to Top</a
