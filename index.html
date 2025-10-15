@@ -54,20 +54,25 @@
     }
 
     /* ---- HERO DOG (fade on scroll) ---- */
-    .hero-dog{
-      position:fixed; z-index:1; top:48px; right:24px;
-      width: clamp(280px, 34vw, 520px);
-      height:auto;
-      filter: drop-shadow(0 28px 60px rgba(0,0,0,.45));
-      user-select:none; pointer-events:none;
+    .hero-dog {
+  position: fixed;
+  z-index: 1;
+  top: 48px;
+  right: 24px;
+  width: clamp(240px, 28vw, 400px); /* 🔽 намалено */
+  height: auto;
+  filter: drop-shadow(0 28px 60px rgba(0,0,0,.45));
+  user-select: none;
+  pointer-events: none;
 
-      --dog-ty: 0px;
-      --dog-scale: 1;
-      opacity: 1;
-      transform: translateY(var(--dog-ty)) scale(var(--dog-scale));
-      transition: opacity .15s linear, transform .2s ease;
-      will-change: opacity, transform;
-    }
+  --dog-ty: 0px;
+  --dog-scale: 1;
+  opacity: 1;
+  transform: translateY(var(--dog-ty)) scale(var(--dog-scale));
+  transition: opacity .15s linear, transform .2s ease;
+  will-change: opacity, transform;
+}
+
     @media (max-width: 900px){
       .hero-dog{
         right:50%;
