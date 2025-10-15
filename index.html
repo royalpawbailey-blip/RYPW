@@ -34,13 +34,18 @@
 
     /* ---- ФОН ---- */
     .site-bg{
-      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
       background:
         radial-gradient(1100px 540px at 50% -140px, rgba(255,154,47,.55), rgba(255,154,47,0) 60%),
         linear-gradient(to bottom,var(--bg-top),var(--bg-bottom));
     }
     .site-bg::after{
-      content:""; position:absolute; inset:0; opacity:.08;
+      content:"";
+      position:absolute; inset:0;
+      opacity:.08;
       background-image:url("data:image/svg+xml;utf8,\
       <svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none'>\
         <g fill='%23ffffff'>\
@@ -53,24 +58,42 @@
       background-size:220px 220px; background-repeat:repeat;
     }
 
-    /* ---- КУЧЕ ---- */
+    /* ---- HERO DOG (fade on scroll) ---- */
     .hero-dog{
-      position:fixed; z-index:1; top:48px; right:24px;
-      width: clamp(320px, 34vw, 560px); height:auto;
+      position:fixed;
+      z-index:1;
+      top:48px;
+      right:24px;
+      width: clamp(320px, 34vw, 560px);
+      height:auto;
       filter: drop-shadow(0 28px 60px rgba(0,0,0,.45));
       user-select:none; pointer-events:none;
+
+      --dog-ty: 0px;
+      --dog-scale: 1;
+      opacity: 1;
+      transform: translateY(var(--dog-ty)) scale(var(--dog-scale));
+      transition: opacity .15s linear, transform .2s ease;
+      will-change: opacity, transform;
     }
+
     @media (max-width: 900px){
       .hero-dog{
-        right:50%; transform:translateX(50%);
+        right:50%;
         top: clamp(12px, 4vh, 28px);
         width: clamp(240px, 58vw, 400px);
+        transform: translateX(50%) translateY(var(--dog-ty)) scale(var(--dog-scale));
       }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .hero-dog{ transition: opacity .15s linear; }
     }
 
     /* ---- НАВИГАЦИЯ ---- */
     nav ul li a { 
-      color:#fff !important; font-weight:700;
+      color:#fff !important; 
+      font-weight:700; 
       transition:filter .25s ease, text-shadow .25s ease;
     }
     nav ul li a:hover{
@@ -80,33 +103,58 @@
 
     /* ---- СЕКЦИИ ---- */
     main, section{
-      padding:2rem; border-radius:16px; max-width:900px; margin:2rem auto;
-      background:rgba(0,0,0,0.35); animation:fadeInUp 1.2s ease; backdrop-filter:saturate(120%);
+      padding:2rem;
+      border-radius:16px;
+      max-width:900px;
+      margin:2rem auto;
+      background:rgba(0,0,0,0.35);
+      animation:fadeInUp 1.2s ease;
+      backdrop-filter:saturate(120%);
     }
 
-    /* ---- HERO ---- */
     .hero{
-      text-align:center; background: transparent; border-radius: 0; width: auto;
-      padding-top: clamp(4rem, 9vh, 6.5rem); padding-bottom: clamp(1rem, 3vh, 2rem);
+      text-align:center;
+      padding-top: clamp(4rem, 9vh, 6.5rem);
+      padding-bottom: clamp(1rem, 3vh, 2rem);
+      background: transparent;
+      border-radius: 0;
+      width: auto;
       margin: 2.5rem auto 0.5rem;
     }
     .hero p{
-      font-size:1.25rem; margin:.5rem 0 0; font-weight:700; color:#fff;
+      font-size:1.25rem;
+      margin:.5rem 0 0;
+      font-weight:700;
+      color:#fff;
       text-shadow:0 2px 10px rgba(0,0,0,.7);
     }
 
     /* ---- ЗЛАТНО ЗАГЛАВИЕ ---- */
     h1, h2, h3{
-      font-weight:800; text-transform:uppercase; letter-spacing:.5px; margin:0 0 1rem 0;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+      margin:0 0 1rem 0;
       color: #ffd451;
-      background: linear-gradient(120deg, var(--gold1), var(--gold2), var(--gold3), var(--gold4), var(--gold2));
+      background:
+        linear-gradient(120deg, var(--gold1), var(--gold2), var(--gold3), var(--gold4), var(--gold2));
       background-size: 250% 250%;
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+              background-clip:text;
       text-shadow:0 0 12px rgba(255, 210, 100, .18);
       animation: goldShift 5.5s ease-in-out infinite;
     }
-    .hero h1{ font-size: clamp(3.2rem, 7.4vw, 5rem); line-height:1.1; letter-spacing:2px; }
-    section h2{ text-align:center; font-size: clamp(1.6rem, 3.5vw, 2.2rem); line-height:1.25; }
+    .hero h1{
+      font-size: clamp(3.2rem, 7.4vw, 5rem);
+      line-height:1.1;
+      letter-spacing:2px;
+    }
+    section h2{
+      text-align:center; 
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      line-height:1.25;
+    }
     @keyframes goldShift{
       0%{ background-position:0% 50%}
       50%{ background-position:100% 50%}
@@ -117,84 +165,62 @@
     .buy-btn{
       display:inline-block;
       background:linear-gradient(135deg,#f6e27a 0%,#ffd451 30%,#ffb400 70%,#e6a800 100%);
-      color:#2a1500; font-weight:800; padding:1rem 2rem; margin-top:1.25rem;
-      font-size:1.15rem; border-radius:14px; border:1px solid rgba(255,220,100,0.5);
-      text-decoration:none; position:relative; overflow:hidden;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 0 25px rgba(255,200,90,0.45), 0 0 60px rgba(255,180,70,0.25);
+      color:#2a1500;
+      font-weight:800;
+      padding:1rem 2rem;
+      margin-top:1.25rem;
+      font-size:1.15rem;
+      border-radius:14px;
+      border:1px solid rgba(255,220,100,0.5);
+      text-decoration:none;
+      box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.4),
+        0 0 25px rgba(255,200,90,0.45),
+        0 0 60px rgba(255,180,70,0.25);
+      position:relative;
+      overflow:hidden;
       animation: pulseGold 2.6s infinite ease-in-out;
       transition:transform .2s ease, box-shadow .3s ease, filter .3s ease;
     }
     .buy-btn:hover{
       transform:translateY(-2px) scale(1.04);
-      box-shadow: inset 0 2px 6px rgba(255,255,255,0.5), 0 0 35px rgba(255,210,80,0.75), 0 0 80px rgba(255,160,40,0.55);
+      box-shadow:
+        inset 0 2px 6px rgba(255,255,255,0.5),
+        0 0 35px rgba(255,210,80,0.75),
+        0 0 80px rgba(255,160,40,0.55);
       filter:brightness(1.08);
     }
     .buy-btn::after{
-      content:""; position:absolute; top:0; left:-75%; width:50%; height:100%;
+      content:"";
+      position:absolute;
+      top:0; left:-75%;
+      width:50%;
+      height:100%;
       background:linear-gradient(120deg,rgba(255,255,255,0.7),rgba(255,255,255,0));
-      transform:skewX(-20deg); animation:shineGold 4s infinite;
+      transform:skewX(-20deg);
+      animation:shineGold 4s infinite;
     }
-    @keyframes shineGold{ 0%{left:-75%} 50%{left:125%} 100%{left:125%} }
-    @keyframes pulseGold{ 0%,100%{ box-shadow:0 0 25px rgba(255,200,90,0.35)} 50%{ box-shadow:0 0 50px rgba(255,230,120,0.8)} }
-
-    /* ---- ГРИД за donation ---- */
-    .split{
-      display:grid; grid-template-columns: 1.2fr 1fr; gap:1.5rem; align-items:center;
-      background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.25));
-      border:1px solid rgba(255,210,90,.15); border-radius:18px; padding:1.2rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.02);
+    @keyframes shineGold{
+      0%{ left:-75%; }
+      50%{ left:125%; }
+      100%{ left:125%; }
     }
-    .split .visual{
-      background: radial-gradient(800px 260px at 50% 0%, rgba(255,180,80,.22), transparent 60%);
-      border-radius:14px; padding:10px;
+    @keyframes pulseGold{
+      0%,100%{ box-shadow:0 0 25px rgba(255,200,90,0.35); }
+      50%{ box-shadow:0 0 50px rgba(255,230,120,0.8); }
     }
-    .split .visual img{
-      width:100%; border-radius:12px;
-      box-shadow:0 12px 36px rgba(0,0,0,.45), 0 0 42px rgba(255,210,90,.22);
-      display:block;
-    }
-    .badge{
-      display:inline-block; padding:.35rem .7rem; border-radius:999px;
-      font-weight:800; font-size:.82rem; letter-spacing:.3px;
-      color:#2a1500; background:linear-gradient(135deg,#ffe58a,#ffc94a,#ffb400);
-      box-shadow:0 6px 18px rgba(255,200,90,.35);
-      margin-bottom:.6rem;
-    }
-    .donation-list{ margin:.8rem 0 0; padding-left:1rem; }
-    .donation-list li{ margin:.25rem 0; }
-
-    /* ---- ГАЛЕРИИ/Други ---- */
-    p, li { color: var(--white); line-height:1.65; }
-    strong { color:#ffcc55; text-shadow:0 0 10px rgba(255, 200, 120, .3); }
-
-    .roadmap-image{ width:90%; max-width:1200px; display:block; margin:1rem auto; border-radius:12px; }
-    .nft-grid{ display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
-    .nft-grid img{ width:120px; border-radius:12px; transition:transform .25s ease, box-shadow .25s ease; cursor:pointer; }
-    .nft-grid img:hover{ transform:translateY(-4px) scale(1.05); box-shadow:0 10px 24px rgba(0,0,0,.35); }
-
-    .media-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; }
-    .media-grid img{ width:100px; height:100px; border-radius:10px; object-fit:cover; transition:transform .3s ease; cursor:pointer; }
-    .media-grid img:hover{ transform:scale(1.12); }
-
-    .social-icons{ display:flex; justify-content:center; flex-wrap:wrap; gap:1rem; }
-    .social-icons img{ width:40px; height:40px; object-fit:contain; transition:transform .2s ease, filter .2s ease; }
-    .social-icons a:hover img{ transform:translateY(-2px); filter:drop-shadow(0 0 10px rgba(255,210,100,.45)); }
-
-    audio{ width:100%; margin-top:1rem; }
-    iframe{ width:100%; height:500px; border:none; }
 
     /* ---- MOBILE ---- */
     @media (max-width: 900px){
-      .hero{ padding-top: clamp(8rem, 22vh, 14rem); padding-bottom: clamp(.75rem, 2vh, 1.25rem); margin: 2rem auto .5rem; }
+      .hero{
+        padding-top: clamp(8rem, 22vh, 14rem);
+        padding-bottom: clamp(.75rem, 2vh, 1.25rem);
+        margin: 2rem auto .5rem;
+      }
       .hero h1{ font-size: clamp(2.2rem, 9vw, 3rem); }
-      .roadmap-image{ width:100%; border-radius:10px; }
       main, section{ padding:1.1rem; margin:1rem auto; }
-      .nft-grid img{ width:100px; }
-      .media-grid img{ width:86px; height:86px; }
-      .social-icons img{ width:36px; height:36px; }
       .hero p{ font-size:1.05rem; }
       .buy-btn{ padding:.9rem 1.6rem; font-size:1.05rem; }
-      .split{ grid-template-columns: 1fr; }
     }
 
     @keyframes fadeInUp{ from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
@@ -207,7 +233,6 @@
 
   <nav class="container-fluid">
     <ul><li><strong>RoyalPAW</strong></li></ul>
-    <ul></ul>
   </nav>
 
   <!-- HERO -->
@@ -215,161 +240,46 @@
     <h1>RoyalPAW $RYPW</h1>
     <p>The Royal Bark of Web3 on Solana</p>
     <a class="buy-btn" href="https://pump.fun/board" target="_blank">BUY $RYPW</a>
-    <p><strong>Contract address:</strong> So11111111111111111111111111111111111111112</p>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
+  <!-- пример останалите секции -->
+  <section>
     <h2>About RoyalPAW</h2>
-    <p>RoyalPAW ($RYPW) is not just another meme token — it’s the crown jewel of Solana, inspired by Bailey, the one true royal Cavalier King — the only dog with “King” in his name. 🐶👑
-    <br><br>
-    Forged from loyalty, purpose, and paws, RoyalPAW unites meme culture with real-world kindness — supporting dog shelters, honoring all four-legged royals, and crowning its holders as part of the digital kingdom of paw power.
-    <br><br>
-    With NFTs, community strength, and unstoppable royal vibes, Bailey’s dream becomes the blockchain’s legacy. Join the pack.</p>
+    <p>RoyalPAW ($RYPW) is not just another meme token — it’s the crown jewel of Solana, inspired by Bailey, the one true royal Cavalier King — the only dog with “King” in his name. 🐶👑</p>
   </section>
 
-  <!-- HOW TO BUY -->
-  <section id="how">
-    <h2>How to Buy $RYPW</h2>
-    <p>Buying $RYPW on <strong>Solana</strong> is simple and takes just a few minutes! Follow these steps carefully 👇</p>
-
-    <ol>
-      <li><strong>💼 Step 1: Create a Solana Wallet</strong><br>
-        • Download <a href="https://phantom.app/" target="_blank">Phantom Wallet</a> (for Chrome, Firefox, or mobile).<br>
-        • Click “Create a new wallet” and store your secret phrase safely.<br>
-        • <em>(Never share your secret phrase with anyone!)</em>
-      </li>
-
-      <li style="margin-top: 1rem;"><strong>💰 Step 2: Fund Your Wallet with SOL</strong><br>
-        • Buy SOL from an exchange (e.g. <a href="https://www.binance.com/" target="_blank">Binance</a>, <a href="https://coinbase.com/" target="_blank">Coinbase</a>).<br>
-        • Withdraw SOL to your Phantom wallet address.<br>
-        • You’ll need SOL to cover both the purchase and small Solana network fees.
-      </li>
-
-      <li style="margin-top: 1rem;"><strong>🌐 Step 3: Visit Pump.fun</strong><br>
-        • Go to <a href="https://pump.fun/board" target="_blank">Pump.fun</a> — this is where $RYPW was launched.<br>
-        • Connect your Phantom wallet (top-right corner).<br>
-        • In the search bar, paste our token address:<br>
-        <code>So11111111111111111111111111111111111111112</code>
-      </li>
-
-      <li style="margin-top: 1rem;"><strong>🚀 Step 4: Buy $RYPW</strong><br>
-        • Click “Buy” and choose the amount of SOL you want to trade for $RYPW.<br>
-        • Confirm the transaction in your wallet.<br>
-        • Wait a few seconds — you’ll see $RYPW in your Phantom wallet balance!
-      </li>
-
-      <li style="margin-top: 1rem;"><strong>💎 Step 5: Track & Hold</strong><br>
-        • You can follow the live chart on <a href="https://dexscreener.com" target="_blank">DexScreener</a>.<br>
-        • $RYPW holders get access to NFT perks, airdrops, and exclusive community events.<br>
-        • Join our <a href="https://t.me" target="_blank">Telegram</a> or <a href="https://twitter.com/RoyalPawTOKEN" target="_blank">Twitter</a> to stay updated!
-      </li>
-    </ol>
-
-    <div style="background:rgba(0,0,0,0.4); border-left:4px solid #ff9a2f; padding:1rem; margin-top:2rem; border-radius:8px;">
-      <strong>💡 Quick Links:</strong><br>
-      🔗 <a href="https://pump.fun/board" target="_blank">Buy on Pump.fun</a><br>
-      📈 <a href="https://dexscreener.com" target="_blank">View Chart on DexScreener</a><br>
-      🐶 <a href="#nfts">Explore Bailey’s NFT Collection</a><br>
-      📬 <a href="https://t.me" target="_blank">Join Telegram Community</a>
-    </div>
-  </section>
-
-  <!-- TOKENOMICS -->
-  <section id="tokenomics">
-    <h2>Tokenomics</h2>
-    <p><img src="assets/token-icon.png" alt="Token Icon" style="width:30px; vertical-align:middle;"> Total Supply: 1,000,000,000 $RYPW</p>
-    <ul>
-      <li>50M – Locked for project stability</li>
-      <li>10M – Airdrop to NFT holders</li>
-      <li>5M – For dog owners posting selfies</li>
-      <li>30M – Donations to dog shelters</li>
-      <li>5M – Burned permanently</li>
-    </ul>
-    <iframe src="https://dexscreener.com/"></iframe>
-  </section>
-
-  <!-- ROADMAP -->
-  <section id="roadmap">
-    <h2>Roadmap</h2>
-    <img src="assets/roadmap.png" alt="Roadmap" class="roadmap-image" />
-  </section>
-
-  <!-- DONATION MISSION -->
-  <section id="donation">
-    <h2>Donating Shelters Mission</h2>
-
-    <div class="split">
-      <div class="visual">
-        <!-- сложи файла си тук: assets/donation.png -->
-        <img src="assets/donation.png" alt="Bailey helping shelters">
-      </div>
-
-      <div class="copy">
-        <span class="badge">Powered by the Royal Community</span>
-        <p>As a true King, <strong>Bailey’s mission goes beyond the blockchain.</strong> With the power of <strong>$RYPW</strong> and our loyal community, we aim to bring real help to dogs in need — food, care and support for struggling shelters.</p>
-        <ul class="donation-list">
-          <li><strong>5% of total supply</strong> is dedicated to donations for dog shelters.</li>
-          <li>Part of the tokens held by Bailey are reserved strictly for this mission.</li>
-          <li>All donations will be <strong>documented and shared</strong> with the community.</li>
-        </ul>
-        <p style="margin-top:.6rem;">We can’t save every dog in the world — <strong>but together we can help many.</strong> 🐾👑</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- STORY -->
-  <section id="story">
-    <h2>The Story of Bailey</h2>
-    <audio controls autoplay>
-      <source src="assets/bailey-story.mp3" type="audio/mp3" />
-      Your browser does not support the audio element.
-    </audio>
-  </section>
-
-  <!-- NFTS -->
-  <section id="nfts">
-    <h2>Bailey’s NFT Collection</h2>
-    <p>150 unique NFTs with bonuses:<br>
-      • 50 Premium = 100K $RYPW<br>
-      • 100 Standard = 50K $RYPW
-    </p>
-    <div class="nft-grid">
-      <img src="assets/nft1.png" alt="NFT1" />
-      <img src="assets/nft2.png" alt="NFT2" />
-      <img src="assets/nft3.png" alt="NFT3" />
-      <img src="assets/nft4.png" alt="NFT4" />
-      <img src="assets/nft5.png" alt="NFT5" />
-      <img src="assets/nft6.png" alt="NFT6" />
-      <img src="assets/nft7.png" alt="NFT7" />
-      <img src="assets/nft8.png" alt="NFT8" />
-      <img src="assets/nft9.png" alt="NFT9" />
-      <img src="assets/nft10.png" alt="NFT10" />
-    </div>
-    <div style="text-align:center; margin-top: 1rem">
-      <a class="buy-btn" href="https://opensea.io" target="_blank">View Full Collection</a>
-    </div>
-  </section>
-
-  <!-- SOCIALS -->
-  <section id="socials">
-    <h2>Socials</h2>
-    <div class="social-icons">
-      <a href="https://twitter.com/RoyalPawTOKEN" target="_blank"><img src="assets/twitter.png" alt="Twitter"></a>
-      <a href="https://instagram.com" target="_blank"><img src="assets/instagram.png" alt="Instagram"></a>
-      <a href="https://t.me" target="_blank"><img src="assets/telegram.png" alt="Telegram"></a>
-      <a href="https://coinmarketcap.com/" target="_blank"><img src="assets/cmc.png" alt="CMC"></a>
-      <a href="https://coingecko.com/" target="_blank"><img src="assets/coingecko.png" alt="CoinGecko"></a>
-      <a href="https://dexscreener.com/" target="_blank"><img src="assets/dexscreener.png" alt="Dexscreener"></a>
-      <a href="https://pump.fun/board" target="_blank"><img src="assets/pumpfun.png" alt="PumpFun"></a>
-      <a href="https://opensea.io" target="_blank"><img src="assets/opensea.png" alt="Opensea"></a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer style="text-align: center; padding: 2rem;">
-    <small>RoyalPAW © 2025 • <a href="#buy" style="color: white;">Back to Top</a></small>
+  <footer style="text-align:center;padding:2rem;">
+    <small>RoyalPAW © 2025</small>
   </footer>
+
+  <!-- JS за fade-out ефекта -->
+  <script>
+    (function(){
+      const dog = document.querySelector('.hero-dog');
+      if(!dog) return;
+
+      function getFadeEnd(){
+        return Math.max(260, window.innerHeight * 0.6);
+      }
+
+      let fadeEnd = getFadeEnd();
+
+      function onScroll(){
+        const y = window.scrollY || window.pageYOffset || 0;
+        const t = Math.min(Math.max(y / fadeEnd, 0), 1);
+        const opacity = 1 - t;
+        dog.style.opacity = opacity.toFixed(3);
+        const ty = 40 * t;
+        const scale = 1 - 0.05 * t;
+        dog.style.setProperty('--dog-ty', ty + 'px');
+        dog.style.setProperty('--dog-scale', scale.toFixed(3));
+      }
+
+      window.addEventListener('resize', () => { fadeEnd = getFadeEnd(); onScroll(); }, {passive:true});
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    })();
+  </script>
 
 </body>
 </html>
