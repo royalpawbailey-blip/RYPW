@@ -101,19 +101,27 @@
     }
 
     /* ✅ RESPONSIVE HERO IMAGE FIX */
-    .hero-dog {
-      width: 350px;
-      max-width: 90%;
-      display: block;
-      margin: 2rem auto 0;
-      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.4));
-    }
+  .hero-dog {
+  display: block;
+  margin: 0 auto;
+  width: clamp(200px, 30vw, 420px);
+  height: auto;
+  filter: drop-shadow(0 16px 32px rgba(0,0,0,0.35));
+  transform: translateY(-20px); /* лека корекция за desktop */
+}
 
-    @media (max-width: 768px) {
-      .hero {
-        padding-top: 8rem;
-        padding-bottom: 2rem;
-      }
+@media (max-width: 768px) {
+  .hero-dog {
+    width: 200px;
+    transform: translateY(0); /* махаме вдигането */
+    margin-bottom: 1rem; /* леко разстояние преди заглавието */
+  }
+
+  .hero {
+    padding-top: 6rem;
+  }
+}
+
       .hero p {
         font-size: 1.1rem;
       }
