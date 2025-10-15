@@ -55,10 +55,7 @@
 
     /* ---- HERO DOG (fade on scroll) ---- */
     .hero-dog{
-      position:fixed;
-      z-index:1;
-      top:48px;
-      right:24px;
+      position:fixed; z-index:1; top:48px; right:24px;
       width: clamp(320px, 34vw, 560px);
       height:auto;
       filter: drop-shadow(0 28px 60px rgba(0,0,0,.45));
@@ -81,6 +78,32 @@
     }
     @media (prefers-reduced-motion: reduce){
       .hero-dog{ transition: opacity .15s linear; }
+    }
+
+    /* ---- FLOATING PAW (appears after Bailey fades) ---- */
+    .floating-paw{
+      position: fixed;
+      left: clamp(10px, 1.8vw, 18px);
+      top: 42vh;
+      width: 38px;   /* ~1cm */
+      height: 38px;
+      opacity: 0;    /* hidden initially */
+      pointer-events: none; /* never blocks clicks */
+      z-index: 0; /* below hero, above bg */
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,.25));
+      animation: floatY 6s ease-in-out infinite alternate;
+      transition: opacity .35s linear;
+      mix-blend-mode: normal;
+    }
+    @keyframes floatY{
+      from { transform: translateY(-6px); }
+      to   { transform: translateY(6px); }
+    }
+    @media (max-width: 900px){
+      .floating-paw{ width:30px; height:30px; left:10px; top:44vh; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .floating-paw{ animation:none; }
     }
 
     /* ---- НАВИГАЦИЯ ---- */
@@ -215,6 +238,8 @@
 
   <div class="site-bg"></div>
   <img class="hero-dog" src="assets/bailey-king.png" alt="RoyalPAW Bailey with crown">
+  <!-- Floating paw icon (transparent PNG). Save as assets/paw-crown.png -->
+  <img class="floating-paw" src="assets/paw-crown.png" alt="" aria-hidden="true">
 
   <nav class="container-fluid">
     <ul><li><strong>RoyalPAW</strong></li></ul>
@@ -291,13 +316,13 @@
     <h2>Tokenomics</h2>
     <p><img src="assets/token-icon.png" alt="Token Icon" style="width:30px; vertical-align:middle;"> Total Supply: 1,000,000,000 $RYPW</p>
     <ul>
-      <li> 💎 Bailey’s Treasury: 100.000.000 $RYPW For project use and community missions (locked & transparent).</li>
-      <li> 🏰 30.000.000 – Locked for project stability</li>
-      <li> 🎁 10.000.000 – Airdrop to NFT holders</li>
-      <li> 📸 5.000.000 – For dog owners posting selfies</li>
-      <li> 📈 5.000.000 – Marketing </li>
-      <li> ❤️ 50.000.000 – Donations to dog shelters</li>
-      <li> 👑 900.000.000 🐾 - Available to the public via Pump.fun liquidity — fair, open launch with no private allocations</li>
+      <li> 💎 Bailey’s Treasury: 100,000,000 $RYPW for project use and community missions (locked & transparent).</li>
+      <li> 🏰 30,000,000 – Locked for project stability</li>
+      <li> 👑 10,000,000 – Airdrop to NFT holders</li>
+      <li> 📸 5,000,000 – For dog owners posting selfies</li>
+      <li> 📈 5,000,000 – Marketing</li>
+      <li> ❤️ 50,000,000 – Donations to dog shelters</li>
+      <li> 🐾 900,000,000 – Available to the public via Pump.fun liquidity — fair, open launch with no private allocations</li>
     </ul>
     <iframe src="https://dexscreener.com/"></iframe>
   </section>
@@ -314,7 +339,6 @@
 
     <div class="split">
       <div class="visual">
-        <!-- Сложи файла си тук: assets/donation.png -->
         <img src="assets/donation.png" alt="Bailey helping shelters">
       </div>
 
@@ -345,16 +369,10 @@
     <h2>Bailey’s RoyalPaw NFT Collection</h2>
     <p>Every kingdom needs a legend — and every legend needs its crown.<br>
       Bailey’s Royal Collection is more than just NFTs.
-It’s a digital legacy, a celebration of loyalty, and a mission to turn memes into meaning.
+      It’s a digital legacy, a celebration of loyalty, and a mission to turn memes into meaning.
+      Each piece carries the spirit of the royal Cavalier King — crafted with purpose, crowned with kindness, and powered by the strength of the RoyalPAW community.
+      Owning one means more than holding art — you hold a piece of Bailey’s vision: to bring light, love, and hope to dogs in need.</p>
 
-Each piece carries the spirit of the royal Cavalier King —
-crafted with purpose, crowned with kindness,
-and powered by the strength of the RoyalPAW community.
-
-Owning one means more than holding art —
-you hold a piece of Bailey’s vision:
-to bring light, love, and hope to dogs in need.<br>
-    </p>
     <div class="nft-grid">
       <img src="assets/NFT1.png" alt="NFT1" />
       <img src="assets/NFT2.png" alt="NFT2" />
@@ -388,27 +406,37 @@ to bring light, love, and hope to dogs in need.<br>
     <small>RoyalPAW © 2025 • <a href="#buy" style="color: white;">Back to Top</a></small>
   </footer>
 
-  <!-- JS за fade-out ефекта на Bailey -->
+  <!-- JS: fade-out на Bailey + появяване на лапичката -->
   <script>
     (function(){
       const dog = document.querySelector('.hero-dog');
+      const paw = document.querySelector('.floating-paw');
       if(!dog) return;
 
       function getFadeEnd(){
-        return Math.max(260, window.innerHeight * 0.6); // колко скрол до пълно изчезване
+        return Math.max(260, window.innerHeight * 0.6); // scroll distance to fully fade
       }
-
       let fadeEnd = getFadeEnd();
+
+      function clamp01(v){ return Math.min(Math.max(v,0),1); }
 
       function onScroll(){
         const y = window.scrollY || window.pageYOffset || 0;
-        const t = Math.min(Math.max(y / fadeEnd, 0), 1); // 0..1
+        const t = clamp01(y / fadeEnd); // 0..1
+
+        // Bailey fade/transform
         const opacity = 1 - t;
         dog.style.opacity = opacity.toFixed(3);
-        const ty = 40 * t;             // плавно надолу до ~40px
-        const scale = 1 - 0.05 * t;    // леко смаляване до ~95%
+        const ty = 40 * t;
+        const scale = 1 - 0.05 * t;
         dog.style.setProperty('--dog-ty', ty + 'px');
         dog.style.setProperty('--dog-scale', scale.toFixed(3));
+
+        // Floating paw appears after Bailey is ~75% faded
+        if(paw){
+          const a = clamp01((t - 0.75) / 0.25); // 0 at 75%, 1 at 100%
+          paw.style.opacity = (0.22 * a).toFixed(3); // subtle visibility
+        }
       }
 
       window.addEventListener('resize', () => { fadeEnd = getFadeEnd(); onScroll(); }, {passive:true});
