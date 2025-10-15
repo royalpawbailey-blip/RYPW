@@ -80,30 +80,33 @@
       .hero-dog{ transition: opacity .15s linear; }
     }
 
-    /* ---- FLOATING PAW (appears after Bailey fades) ---- */
-    .floating-paw{
+    /* ---- MULTI FLOATING PAWS (appear after Bailey fades) ---- */
+    .floating-paws{
       position: fixed;
-      left: clamp(10px, 1.8vw, 18px);
-      top: 42vh;
-      width: 38px;   /* ~1cm */
-      height: 38px;
-      opacity: 0;    /* hidden initially */
-      pointer-events: none; /* never blocks clicks */
-      z-index: 0; /* below hero, above bg */
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,.25));
-      animation: floatY 6s ease-in-out infinite alternate;
-      transition: opacity .35s linear;
-      mix-blend-mode: normal;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0; /* под Бейли, над фона */
     }
+    .floating-paws .paw{
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      opacity: 0; /* скрити по начало */
+      filter: drop-shadow(0 3px 8px rgba(0,0,0,.25));
+      animation: floatY 6s ease-in-out infinite alternate;
+      transition: opacity .5s linear;
+      will-change: transform, opacity;
+    }
+    /* леко плуване */
     @keyframes floatY{
-      from { transform: translateY(-6px); }
-      to   { transform: translateY(6px); }
+      from { transform: translateY(-8px); }
+      to   { transform: translateY(8px); }
     }
     @media (max-width: 900px){
-      .floating-paw{ width:48px; height:48px; left:10px; top:44vh; }
+      .floating-paws .paw{ width:48px; height:48px; }
     }
     @media (prefers-reduced-motion: reduce){
-      .floating-paw{ animation:none; }
+      .floating-paws .paw{ animation:none; }
     }
 
     /* ---- НАВИГАЦИЯ ---- */
@@ -238,8 +241,17 @@
 
   <div class="site-bg"></div>
   <img class="hero-dog" src="assets/bailey-king.png" alt="RoyalPAW Bailey with crown">
-  <!-- Floating paw icon (transparent PNG). Save as assets/paw-crown.png -->
-  <img class="floating-paw" src="assets/paw-crown.png" alt="" aria-hidden="true">
+
+  <!-- Multiple floating paws (transparent PNG). Use assets/paw-crown.png -->
+  <div class="floating-paws">
+    <img src="assets/paw-crown.png" class="paw" alt="" aria-hidden="true">
+    <img src="assets/paw-crown.png" class="paw" alt="" aria-hidden="true">
+    <img src="assets/paw-crown.png" class="paw" alt="" aria-hidden="true">
+    <img src="assets/paw-crown.png" class="paw" alt="" aria-hidden="true">
+    <img src="assets/paw-crown.png" class="paw" alt="" aria-hidden="true">
+    <img src="assets/paw-crown.png" class="paw" alt="" aria-hidden="true">
+    <img src="assets/paw-crown.png" class="paw" alt="" aria-hidden="true">
+  </div>
 
   <nav class="container-fluid">
     <ul><li><strong>RoyalPAW</strong></li></ul>
@@ -406,19 +418,29 @@
     <small>RoyalPAW © 2025 • <a href="#buy" style="color: white;">Back to Top</a></small>
   </footer>
 
-  <!-- JS: fade-out на Bailey + появяване на лапичката -->
+  <!-- JS: fade-out на Bailey + рандом позициониране/поява на лапичките -->
   <script>
     (function(){
       const dog = document.querySelector('.hero-dog');
-      const paw = document.querySelector('.floating-paw');
-      if(!dog) return;
+      const paws = document.querySelectorAll('.floating-paws .paw');
+      if(!dog || !paws.length) return;
 
-      function getFadeEnd(){
-        return Math.max(260, window.innerHeight * 0.6); // scroll distance to fully fade
+      // random helpers
+      const rand = (min,max)=> Math.random()*(max-min)+min;
+      const clamp01 = v => Math.min(Math.max(v,0),1);
+
+      // distance to fully hide Bailey
+      let fadeEnd = Math.max(260, window.innerHeight * 0.6);
+
+      // layout paws randomly (avoiding extreme edges)
+      function layoutPaws(){
+        paws.forEach(p=>{
+          p.style.left = rand(6, 92) + 'vw';
+          p.style.top  = rand(16, 86) + 'vh';
+          p.style.animationDelay = rand(0, 6) + 's';
+          p.style.animationDuration = rand(4, 8) + 's';
+        });
       }
-      let fadeEnd = getFadeEnd();
-
-      function clamp01(v){ return Math.min(Math.max(v,0),1); }
 
       function onScroll(){
         const y = window.scrollY || window.pageYOffset || 0;
@@ -432,15 +454,22 @@
         dog.style.setProperty('--dog-ty', ty + 'px');
         dog.style.setProperty('--dog-scale', scale.toFixed(3));
 
-        // Floating paw appears after Bailey is ~75% faded
-        if(paw){
-          const a = clamp01((t - 0.75) / 0.25); // 0 at 75%, 1 at 100%
-          paw.style.opacity = (0.22 * a).toFixed(3); // subtle visibility
-        }
+        // Paws appear after ~70% fade (0 at 0.7, 1 at 1.0)
+        const a = clamp01((t - 0.7) / 0.3);
+        paws.forEach(p=>{
+          p.style.opacity = (0.18 * a).toFixed(3); // subtle, non-intrusive
+        });
       }
 
-      window.addEventListener('resize', () => { fadeEnd = getFadeEnd(); onScroll(); }, {passive:true});
+      // init
+      layoutPaws();
       window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('resize', ()=>{
+        fadeEnd = Math.max(260, window.innerHeight * 0.6);
+        layoutPaws();
+        onScroll();
+      }, {passive:true});
+
       onScroll();
     })();
   </script>
