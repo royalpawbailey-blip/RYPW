@@ -127,15 +127,14 @@
 
     /* ---- HERO ---- */
     .hero {
-  text-align: center;
-  background: transparent;
-  border-radius: 0;
-  width: auto;
-  padding-top: clamp(10rem, 28vh, 12rem);
-  padding-bottom: clamp(1rem, 3vh, 2rem);
-  margin: 2.5rem auto 0.5rem;
-}
-
+      text-align: center;
+      background: transparent;
+      border-radius: 0;
+      width: auto;
+      padding-top: clamp(10rem, 28vh, 12rem);
+      padding-bottom: clamp(1rem, 3vh, 2rem);
+      margin: 2.5rem auto 0.5rem;
+    }
     .hero p{
       font-size:1.25rem; margin:.5rem 0 0; font-weight:700; color:#fff;
       text-shadow:0 2px 10px rgba(0,0,0,.7);
@@ -224,6 +223,35 @@
     }
     .donation-list{ margin:.8rem 0 0; padding-left:1rem; }
     .donation-list li{ margin:.25rem 0; }
+
+    /* ---- STORY bubble ---- */
+    .story-wrap{
+      display:flex; justify-content:center; align-items:center;
+      margin: 1.2rem 0 1.6rem;
+    }
+    .story-bubble{
+      position: relative;
+      width: min(520px, 88vw);
+      aspect-ratio: 1 / 1;              /* квадрат, държи 1:1 */
+      border-radius: 28px;
+      padding: 14px;
+      background: radial-gradient(800px 260px at 50% 100%, rgba(255,184,64,.18), transparent 60%);
+      border: 1px solid rgba(255,212,81,.35);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.38),
+        inset 0 0 0 1px rgba(255,255,255,.03),
+        0 0 46px rgba(255,200,80,.18);
+      overflow: hidden;
+    }
+    .story-bubble img{
+      width:100%; height:100%;
+      object-fit: contain;               /* PNG е прозрачно с рамка */
+      display:block;
+      filter: drop-shadow(0 16px 28px rgba(0,0,0,.35));
+    }
+    @media (max-width:900px){
+      .story-bubble{ padding:10px; border-radius:22px; }
+    }
 
     /* ---- MOBILE ---- */
     @media (max-width: 900px){
@@ -375,7 +403,16 @@
   <!-- STORY -->
   <section id="story">
     <h2>The Story of Bailey</h2>
-    <audio controls autoplay>
+
+    <!-- bubble portrait -->
+    <div class="story-wrap">
+      <div class="story-bubble">
+        <!-- PNG с прозрачен фон + златна рамка -->
+        <img src="assets/bailey.png" alt="Bailey portrait">
+      </div>
+    </div>
+
+    <audio controls>
       <source src="assets/bailey-story.mp3" type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
