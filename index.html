@@ -73,117 +73,8 @@
       will-change: opacity, transform;
     }
     @media (max-width: 900px){
-      .hero-dog{
-        right:50%;
-        top: clamp(8px, 3vh, 20px);
-        width: clamp(240px, 58vw, 400px);
-        transform: translateX(50%) translateY(var(--dog-ty)) scale(var(--dog-scale));
-      }
-    }
-    @media (prefers-reduced-motion: reduce){
-      .hero-dog{ transition: opacity .15s linear; }
-    }
-
-    /* ---- MULTI FLOATING PAWS (appear after Bailey fades) ---- */
-    .floating-paws{ position: fixed; inset: 0; pointer-events: none; z-index: 1; }
-    .floating-paws .paw{
-      position: absolute; width: 64px; height: 64px; opacity: 0;
-      filter: drop-shadow(0 3px 8px rgba(0,0,0,.25));
-      animation: floatY 6s ease-in-out infinite alternate; transition: opacity .5s linear; will-change: transform, opacity;
-    }
-    @keyframes floatY{ from { transform: translateY(-8px); } to { transform: translateY(8px); } }
-    @media (max-width: 900px){ .floating-paws .paw{ width:48px; height:48px; } }
-    @media (prefers-reduced-motion: reduce){ .floating-paws .paw{ animation:none; } }
-
-    /* ---- НАВИГАЦИЯ ---- */
-    nav ul li a { color:#fff !important; font-weight:700; transition:filter .25s ease, text-shadow .25s ease; }
-    nav ul li a:hover{ filter:brightness(1.15); text-shadow:0 0 14px rgba(255,210,90,.45); }
-
-    /* ---- СЕКЦИИ ---- */
-    main, section{
-      padding:2rem; border-radius:16px; max-width:900px; margin:2rem auto;
-      background:rgba(0,0,0,0.35); animation:fadeInUp 1.2s ease; backdrop-filter:saturate(120%);
-      scroll-margin-top: 140px; /* NEW: nicer anchor offsets under fixed dog */
-    }
-
-    /* ---- HERO ---- */
-    .hero {
-      text-align: center; background: transparent; border-radius: 0; width: auto;
-      padding-top: var(--hero-pad-top-desktop); /* NEW lower the hero content */
-      padding-bottom: clamp(1.25rem, 3vh, 2.25rem);
-      margin: 3.5rem auto 0.75rem; /* NEW extra top margin so nothing overlaps */
-      padding-right: clamp(0px, 26vw, 420px); /* NEW: keep text clear of Bailey on wide screens */
-    }
-    .hero p{ font-size:1.25rem; margin:.5rem 0 0; font-weight:700; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.7); }
-
-    /* ---- ЗЛАТНО ЗАГЛАВИЕ ---- */
-    h1, h2, h3{
-      font-weight:800; text-transform:uppercase; letter-spacing:.5px; margin:0 0 1rem 0;
-      color: #ffd451;
-      background: linear-gradient(120deg, var(--gold1), var(--gold2), var(--gold3), var(--gold4), var(--gold2));
-      background-size: 250% 250%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-      text-shadow:0 0 12px rgba(255, 210, 100, .18);
-      animation: goldShift 5.5s ease-in-out infinite;
-    }
-    .hero h1{ font-size: clamp(3.2rem, 7.4vw, 5rem); line-height:1.1; letter-spacing:2px; }
-    section h2{ text-align:center; font-size: clamp(1.6rem, 3.5vw, 2.2rem); line-height:1.25; }
-    @keyframes goldShift{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-
-    /* ---- ЗЛАТНИ БУТОНИ ---- */
-    .buy-btn{
-      display:inline-block; background:linear-gradient(135deg,#f6e27a 0%,#ffd451 30%,#ffb400 70%,#e6a800 100%);
-      color:#2a1500; font-weight:800; padding:1rem 2rem; margin-top:1.25rem; font-size:1.15rem; border-radius:14px; border:1px solid rgba(255,220,100,0.5);
-      text-decoration:none; position:relative; overflow:hidden; box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 0 25px rgba(255,200,90,0.45), 0 0 60px rgba(255,180,70,0.25);
-      animation: pulseGold 2.6s infinite ease-in-out; transition:transform .2s ease, box-shadow .3s ease, filter .3s ease;
-    }
-    .buy-btn:hover{ transform:translateY(-2px) scale(1.04); box-shadow: inset 0 2px 6px rgba(255,255,255,0.5), 0 0 35px rgba(255,210,80,0.75), 0 0 80px rgba(255,160,40,0.55); filter:brightness(1.08); }
-    .buy-btn::after{ content:""; position:absolute; top:0; left:-75%; width:50%; height:100%; background:linear-gradient(120deg,rgba(255,255,255,0.7),rgba(255,255,255,0)); transform:skewX(-20deg); animation:shineGold 4s infinite; }
-    @keyframes shineGold{ 0%{left:-75%} 50%{left:125%} 100%{left:125%} }
-    @keyframes pulseGold{ 0%,100%{ box-shadow:0 0 25px rgba(255,200,90,0.35)} 50%{ box-shadow:0 0 50px rgba(255,230,120,0.8)} }
-
-    /* ---- ДРУГО ---- */
-    p, li { color: var(--white); line-height:1.65; }
-    strong { color:#ffcc55; text-shadow:0 0 10px rgba(255, 200, 120, .3); }
-
-    .roadmap-image{ width:90%; max-width:1200px; display:block; margin:1rem auto; border-radius:12px; }
-    .nft-grid{ display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
-    .nft-grid img{ width:120px; border-radius:12px; transition:transform .25s ease, box-shadow .25s ease; cursor:pointer; }
-    .nft-grid img:hover{ transform:translateY(-4px) scale(1.05); box-shadow:0 10px 24px rgba(0,0,0,.35); }
-
-    .media-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; }
-    .media-grid img{ width:100px; height:100px; border-radius:10px; object-fit:cover; transition:transform .3s ease; cursor:pointer; }
-    .media-grid img:hover{ transform:scale(1.12); }
-
-    .social-icons{ display:flex; justify-content:center; flex-wrap:wrap; gap:1rem; }
-    .social-icons img{ width:40px; height:40px; object-fit:contain; transition:transform .2s ease, filter .2s ease; }
-    .social-icons a:hover img{ transform:translateY(-2px); filter:drop-shadow(0 0 10px rgba(255,210,100,.45)); }
-
-    audio{ width:100%; margin-top:1rem; }
-    iframe{ width:100%; height:500px; border:none; }
-
-    /* ---- DONATION split layout ---- */
-    .split{
-      display:grid; grid-template-columns: 1.2fr 1fr; gap:1.5rem; align-items:center;
-      background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.25));
-      border:1px solid rgba(255,210,90,.15); border-radius:18px; padding:1.2rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.02);
-    }
-    .split .visual{ background: radial-gradient(800px 260px at 50% 0%, rgba(255,180,80,.22), transparent 60%); border-radius:14px; padding:10px; }
-    .split .visual img{ width:100%; border-radius:12px; box-shadow:0 12px 36px rgba(0,0,0,.45), 0 0 42px rgba(255,210,90,.22); display:block; }
-    .badge{ display:inline-block; padding:.35rem .7rem; border-radius:999px; font-weight:800; font-size:.82rem; letter-spacing:.3px; color:#2a1500; background:linear-gradient(135deg,#ffe58a,#ffc94a,#ffb400); box-shadow:0 6px 18px rgba(255,200,90,.35); margin-bottom:.6rem; }
-    .donation-list{ margin:.8rem 0 0; padding-left:1rem; }
-    .donation-list li{ margin:.25rem 0; }
-
-    /* ---- STORY bubble ---- */
-    .story-wrap{ display:flex; justify-content:center; align-items:center; margin: 1.2rem 0 1.6rem; }
-    .story-bubble{ position: relative; width: min(520px, 88vw); aspect-ratio: 1 / 1; border-radius: 28px; padding: 14px; background: radial-gradient(800px 260px at 50% 100%, rgba(255,184,64,.18), transparent 60%); border: 1px solid rgba(255,212,81,.35); box-shadow: 0 20px 60px rgba(0,0,0,.38), inset 0 0 0 1px rgba(255,255,255,.03), 0 0 46px rgba(255,200,80,.18); overflow: hidden; }
-    .story-bubble img{ width:100%; height:100%; object-fit: contain; display:block; filter: drop-shadow(0 16px 28px rgba(0,0,0,.35)); }
-    @media (max-width:900px){ .story-bubble{ padding:10px; border-radius:22px; } }
-
-    /* ---- MOBILE ---- */
-    @media (max-width: 900px){
       .hero{ padding-top: var(--hero-pad-top-mobile); padding-bottom: clamp(.9rem, 2.4vh, 1.4rem); margin: 2rem auto .75rem; padding-right: 0; }
-      .hero h1{ font-size: clamp(2.2rem, 9vw, 3rem); }
+      .hero h1{ font-size: clamp(2.2rem, 9vw, 3.2rem); text-wrap: balance; }
       .roadmap-image{ width:100%; border-radius:10px; }
       main, section{ padding:1.1rem; margin:1rem auto; }
       .nft-grid img{ width:100px; }
@@ -192,6 +83,17 @@
       .hero p{ font-size:1.05rem; }
       .buy-btn{ padding:.9rem 1.6rem; font-size:1.05rem; }
       .split{ grid-template-columns: 1fr; }
+    }
+
+    /* NEW: mid-desktop fix where title was breaking awkwardly */
+    @media (min-width: 900px) and (max-width: 1280px){
+      .hero{ padding-right: min(14vw, 260px); }
+      .hero h1{ font-size: clamp(2.6rem, 4.8vw, 4rem); }
+    }
+
+    @media (min-width: 1280px){
+      .hero{ padding-right: min(16vw, 300px); }
+      .hero h1{ font-size: clamp(3rem, 5.2vw, 4.8rem); }
     }
 
     @keyframes fadeInUp{ from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
